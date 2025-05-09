@@ -69,8 +69,8 @@
 
     .promo-card {
       border: none;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
     }
 
@@ -108,7 +108,9 @@
   width: 100%;
   height: auto;
 }
-
+ #produk {
+    background-color: #ffefef;
+  }
 
   </style>
 </head>
@@ -168,7 +170,7 @@
 <!-- Promo/Product Section -->
 <section class="promo-section" id="produk">
   <div class="container">
-    <h3 class="text-center mb-4">Promo Spesial Hari Ini</h3>
+    <h3 class="text-center mb-4">Pilih Kado Berdasarkan Katalog</h3>
 
     <!-- Carousel Produk -->
     <div id="produkCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -178,7 +180,7 @@
           <div class="row g-4">
             <div class="col-md-4">
               <div class="card promo-card">
-                <img src="kado1.jpg" class="card-img-top" alt="Produk 1">
+                <img src="kado 1.png" class="card-img-top" alt="Produk 1">
                 <div class="card-body">
                   <h5 class="card-title">Cake</h5>
                   <p class="card-text">Macam-macam kue dengan rasa yang menggugah.</p>
@@ -188,7 +190,7 @@
             </div>
             <div class="col-md-4">
               <div class="card promo-card">
-                <img src="kado2.jpg" class="card-img-top" alt="Produk 2">
+                <img src="kado 2.png" class="card-img-top" alt="Produk 2">
                 <div class="card-body">
                   <h5 class="card-title">Parcel Buah</h5>
                   <p class="card-text">Pilihan kado untuk pasangan, siap kirim hari ini.</p>
@@ -198,9 +200,9 @@
             </div>
             <div class="col-md-4">
               <div class="card promo-card">
-                <img src="kado3.jpg" class="card-img-top" alt="Produk 3">
+                <img src="kado 3.png" class="card-img-top" alt="Produk 3">
                 <div class="card-body">
-                  <h5 class="card-title">Surprise Box</h5>
+                  <h5 class="card-title">Parcel Pecah Belah</h5>
                   <p class="card-text">Isi surprise box bisa kamu sesuaikan sendiri.</p>
                   <a href="/surprise-box" class="btn btn-main">Lihat Detail</a>
                 </div>
@@ -216,7 +218,7 @@
               <div class="card promo-card">
                 <img src="kado 4.png" class="card-img-top" alt="Produk 4">
                 <div class="card-body">
-                  <h5 class="card-title">Gift Box Lux</h5>
+                  <h5 class="card-title">Parcel Makanan</h5>
                   <p class="card-text">Paket kado mewah dengan berbagai pilihan.</p>
                   <a href="/gift-box-lux" class="btn btn-main">Lihat Detail</a>
                 </div>
@@ -296,7 +298,89 @@
 
   </div>
 </section>
+<!-- Pilih Kado Sesuai Momen -->
+<section class="promo-section">
+  <div class="container">
+    <h3 class="text-center mb-4">Pilih Kado Sesuai Momen</h3>
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">🎁 Hari Ibu<br><small>(1298 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">🎓 Wisuda<br><small>(1458 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">🏪 Pembukaan Toko<br><small>(1197 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">👶 Kelahiran<br><small>(115 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">💍 Pernikahan<br><small>(1273 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">💊 Cepat Sembuh<br><small>(448 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">💘 Valentine<br><small>(1460 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">🎊 Imlek<br><small>(503 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">🕯️ Duka Cita<br><small>(964 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">🎂 Ulang Tahun<br><small>(2311 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">💖 Romantis<br><small>(1295 Pilihan)</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-light w-100 border text-start">🎉 Anniversary<br><small>(1808 Pilihan)</small></a>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Kirim Kado Untuk Siapa -->
+<section class="recipient-section mt-5">
+  <div class="container">
+    <h3 class="text-center mb-4">Kirim Kado Untuk Siapa?<br><small class="text-muted">Cek Rekomendasi Kami</small></h3>
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+      <div class="col">
+        <a href="#" class="btn btn-outline-secondary w-100 text-center rounded-4 py-3">
+          👫 Pasangan
+        </a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-outline-secondary w-100 text-center rounded-4 py-3">
+          👨‍👩‍👧‍👦 Orang Tua
+        </a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-outline-secondary w-100 text-center rounded-4 py-3">
+          🧑‍🤝‍🧑 Sahabat
+        </a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-outline-secondary w-100 text-center rounded-4 py-3">
+          👶 Bayi
+        </a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-outline-secondary w-100 text-center rounded-4 py-3">
+          👨‍🏫 Guru
+        </a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-outline-secondary w-100 text-center rounded-4 py-3">
+          👔 Rekan Kerja
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Tentang Section -->
 <section id="tentang" class="promo-section">
