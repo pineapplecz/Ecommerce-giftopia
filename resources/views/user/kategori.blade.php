@@ -7,7 +7,9 @@
     @forelse ($produks as $produk)
     <div class="col-md-4">
       <div class="card kategori-card">
-        <img src="{{ asset('produk_images/'.$produk->image) }}" class="card-img-top" alt="{{ $produk->nama }}">
+        <a href="{{ route('produk.detail', ['id' => $produk->id]) }}">
+          <img src="{{ asset('produk_images/'.$produk->image) }}" class="card-img-top" alt="{{ $produk->nama }}">
+        </a>
         <div class="card-body">
           <h5 class="card-title">{{ $produk->nama }}</h5>
           <p class="card-text">Rp {{ number_format($produk->harga, 0, ',', '.') }}</p>

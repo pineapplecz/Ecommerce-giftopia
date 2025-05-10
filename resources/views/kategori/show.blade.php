@@ -1,4 +1,3 @@
-<!-- resources/views/kategori/show.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -15,6 +14,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->nama }}</h5>
                             <p class="card-text">Rp {{ number_format($item->harga, 0, ',', '.') }}</p>
+                            <!-- Tautan ke halaman detail produk -->
+                            <a href="{{ route('produk.detail', $item->id) }}" class="btn btn-info">Lihat Detail</a>
                             <a href="{{ route('keranjang.tambah', $item->id) }}" class="btn btn-primary">Tambah ke Keranjang</a>
                         </div>
                     </div>

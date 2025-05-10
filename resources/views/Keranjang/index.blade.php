@@ -2,41 +2,66 @@
 
 @section('content')
 <div class="container">
+    <!-- Tombol kembali -->
+    <div class="d-flex justify-content-start mt-3">
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">← Kembali</a>
+    </div>
 
-    <!-- Menampilkan pesan sukses jika ada -->
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+    <h1 class="my-4">Keranjang Belanja</h1>
+
+    @php
+        // Ambil cart dari session
+        $cart = session('cart', []);
+    @endphp
+
+    @if(empty($cart))
+        <p>Keranjang Anda kosong.</p>
+    @else
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama Produk</th>
+                    <th>Jumlah</th>
+                    <th>Harga</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($cart as $produkId => $item)
+                    <tr>
+                        <td>{{ $item['nama'] }}</td>
+                        <td>
+                            <form action="{{ route('keranjang.update', $produkId) }}" method="POST" style="display:inline-flex;">
+                                @csrf
+                                @method('PUT')
+                                <input type="number" name="jumlah" value="{{ $item['jumlah'] }}" min="1" style="width:60px; margin-right:5px;">
+                                <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                            </form>
+                        </td>
+                        <td>Rp {{ number_format($item['harga'], 0, ',', '.') }}</td>
+                        <td>Rp {{ number_format($item['subtotal'], 0, ',', '.') }}</td>
+                        <td>
+                            <form action="{{ route('keranjang.hapus', $produkId) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <!-- Total Harga -->
+        <div class="d-flex justify-content-end mt-4">
+            <h4>Total Harga: Rp {{ number_format($total_harga, 0, ',', '.') }}</h4>
+        </div>
+
+        <!-- Tombol Checkout -->
+        <div class="d-flex justify-content-end mt-4">
+            <a href="{{ route('checkout.form') }}" class="btn btn-success">Checkout</a>
         </div>
     @endif
-
-    <h3>Keranjang Anda</h3>
-
-    <!-- Tabel daftar produk dalam keranjang -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nama Produk</th>
-                <th>Jumlah</th>
-                <th>Harga</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($keranjangs as $id => $keranjang)
-                <tr>
-                    <td>{{ $keranjang['produk']->nama }}</td>
-                    <td>{{ $keranjang['jumlah'] }}</td>
-                    <td>Rp {{ number_format($keranjang['produk']->harga, 2) }}</td>
-                    <td>Rp {{ number_format($keranjang['produk']->harga * $keranjang['jumlah'], 2) }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <h4>Total: Rp {{ number_format($total, 2) }}</h4>
-
-    <!-- Tombol Checkout -->
-    <a href="{{ route('checkout') }}" class="btn btn-primary">Checkout</a>
 </div>
 @endsection

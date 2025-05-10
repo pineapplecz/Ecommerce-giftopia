@@ -9,39 +9,41 @@ use Illuminate\Http\Request;
 
 class PesananController extends Controller
 {
-    public function checkout(Request $request)
-    {
-        $request->validate([
-            'alamat' => 'required|string',
-        ]);
+   public function prosesCheckout(Request $request)
+{
+    $request->validate([
+        'nama' => 'required',
+        'alamat' => 'required',
+        'telepon' => 'required',
+    ]);
 
-        $user = auth()->user();
-        $user->alamat = $request->alamat;
-        $user->save();
+    // Ambil data keranjang
+    $keranjang = Session::get('cart', []);
 
-        $keranjang = Keranjang::where('user_id', auth()->id())->get();
-        $total = $keranjang->sum(fn($item) => $item->produk->harga * $item->jumlah);
+    // Ambil ID pengguna yang login
+    $userId = session('user_id'); // ID pengguna yang login
 
-        $pesanan = Pesanan::create([
-            'user_id' => auth()->id(),
-            'total_harga' => $total,
-            'status' => 'diproses',
-            'alamat_pengiriman' => $user->alamat,
-        ]);
+    // Buat pesanan baru, simpan user_id dan informasi pengiriman
+    $pesanan = Pesanan::create([
+        'user_id' => $userId,  // ID pengguna yang login
+        'nama' => $request->nama,  // Nama penerima (pengguna bisa memasukkan data lain selain mereka)
+        'alamat' => $request->alamat,  // Alamat pengiriman
+        'telepon' => $request->telepon,  // Nomor telepon penerima
+        'total_harga' => array_sum(array_column($keranjang, 'subtotal')),  // Total harga
+    ]);
 
-        foreach ($keranjang as $item) {
-            PesananItem::create([
-                'pesanan_id' => $pesanan->id,
-                'produk_id' => $item->produk_id,
-                'jumlah' => $item->jumlah,
-                'harga_satuan' => $item->produk->harga,
-            ]);
-        }
+    // Menyimpan data checkout di session
+    $dataCheckout = [
+        'nama' => $request->nama,
+        'alamat' => $request->alamat,
+        'telepon' => $request->telepon,
+        'item' => $keranjang,
+        'total' => array_sum(array_column($keranjang, 'subtotal')),
+        'id' => $pesanan->id,   // Simpan ID pesanan yang baru dibuat
+    ];
 
-        Keranjang::where('user_id', auth()->id())->delete();
+    Session::put('data_checkout', $dataCheckout);
 
-        return redirect()->route('struk', $pesanan->id);
-    }
-
-
+    return redirect()->route('checkout.struk');
+}
 }

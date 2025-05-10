@@ -54,24 +54,25 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="/login">
+      <a class="navbar-brand d-flex align-items-center" href="/">
         <img src="{{ asset('logo.png') }}" alt="Logo Giftopia" style="height: 32px; width: 32px; margin-right: 10px;">
         <span class="fw-bold text-white">Giftopia</span>
       </a>
       <div class="d-flex">
-        <a href="{{ route('keranjang.index') }}" class="btn btn-danger">Keranjang</a>
+        <a href="{{ route('keranjang.index') }}" class="btn btn-main">Keranjang</a>
       </div>
+      
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <main class="py-4">
+  <!-- Konten Utama -->
+  <main class="container py-4">
     @yield('content')
   </main>
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 Giftopia. Semua hak dilindungi.</p>
+    <p>© {{ date('Y') }} Giftopia. Semua hak dilindungi.</p>
   </footer>
 
 </body>

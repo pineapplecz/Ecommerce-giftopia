@@ -10,16 +10,16 @@ class KategoriSeeder extends Seeder
     public function run(): void
     {
         DB::table('kategoris')->insert([
-            ['nama' => 'Cake'],
-            ['nama' => 'Parcel Buah'],
-            ['nama' => 'Parcel Pecah Belah'],
-            ['nama' => 'Parcel Makanan'],
-            ['nama' => 'Parcel Kesehatan'],
-            ['nama' => 'Hampers'],
-            ['nama' => 'Personal Gift'],
-            ['nama' => 'Baby Born Gift'],
-            ['nama' => 'Bunga'],
-            ['nama' => 'Hadiah Ulang Tahun'],
+            ['id' => 1, 'nama' => 'Cake'],
+            ['id' => 2, 'nama' => 'Parcel Buah'],
+            ['id' => 3, 'nama' => 'Parcel Pecah Belah'],
+            ['id' => 4, 'nama' => 'Parcel Makanan'],
+            ['id' => 5, 'nama' => 'Parcel Kesehatan'],
+            ['id' => 6, 'nama' => 'Hampers'],
+            ['id' => 7, 'nama' => 'Personal Gift'],
+            ['id' => 8, 'nama' => 'Baby Born Gift'],
+            ['id' => 9, 'nama' => 'Bunga'],
+            ['id' => 10, 'nama' => 'Hadiah Ulang Tahun'],
         ]);
     }
 }

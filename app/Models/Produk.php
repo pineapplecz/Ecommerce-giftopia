@@ -11,6 +11,7 @@ class Produk extends Model
     protected $table = 'produks'; 
     protected $fillable = ['nama', 'harga', 'kategori_id', 'deskripsi', 'gambar'];  // Use 'gambar' here
 
+
     public function kategori()
     {
         return $this->belongsTo(Kategori::class);

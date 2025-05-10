@@ -75,4 +75,20 @@ class ProdukController extends Controller
         Produk::findOrFail($id)->delete();
         return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil dihapus!');
     }
+
+public function show($id)
+{
+    // Menarik data produk beserta kategori yang terkait
+    $produk = Produk::with('kategori')->findOrFail($id);
+    
+    // Menarik produk terkait yang memiliki kategori yang sama, kecuali produk yang sedang ditampilkan
+    $relatedProduks = Produk::where('kategori_id', $produk->kategori_id)
+                            ->where('id', '!=', $produk->id)
+                            ->limit(4)
+                            ->get();
+
+    // Mengembalikan tampilan produk detail dengan membawa data produk dan produk terkait
+    return view('produk.detail', compact('produk', 'relatedProduks'));
+}
+
 }

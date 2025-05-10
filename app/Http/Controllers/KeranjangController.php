@@ -1,53 +1,81 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Keranjang;
-use App\Models\Produk;
 
 class KeranjangController extends Controller
 {
-    public function tambah(Request $request, $id)
+    // Tampilkan isi keranjang
+    public function index()
     {
-        // Cari produk berdasarkan ID
-        $produk = Produk::findOrFail($id);
+        $cart = session('cart', []);
 
-        // Cek apakah produk sudah ada di keranjang (menggunakan session keranjang)
-        $keranjang = session()->get('keranjang', []);
+        $total_harga = array_sum(array_column($cart, 'subtotal'));
 
-        // Cek apakah produk sudah ada dalam keranjang
-        if (isset($keranjang[$id])) {
-            // Jika sudah ada, tambahkan jumlahnya
-            $keranjang[$id]['jumlah'] += $request->jumlah;
+        return view('keranjang.index', compact('cart', 'total_harga'));
+    }
+
+    // Tambahkan produk ke keranjang
+    public function tambah(Request $request, $produkId)
+    {
+        $produk = \App\Models\Produk::find($produkId);
+
+        if (!$produk) {
+            return back()->withErrors(['msg' => 'Produk tidak ditemukan']);
+        }
+
+        $jumlah = $request->input('jumlah', 1);
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$produkId])) {
+            $cart[$produkId]['jumlah'] += $jumlah;
+            $cart[$produkId]['subtotal'] = $cart[$produkId]['jumlah'] * $produk->harga;
         } else {
-            // Jika belum ada, tambahkan produk ke keranjang
-            $keranjang[$id] = [
-                'produk' => $produk,
-                'jumlah' => $request->jumlah
+            $cart[$produkId] = [
+                'nama' => $produk->nama,
+                'harga' => $produk->harga,
+                'jumlah' => $jumlah,
+                'subtotal' => $jumlah * $produk->harga,
             ];
         }
 
-        // Simpan keranjang ke dalam session
-        session()->put('keranjang', $keranjang);
+        session()->put('cart', $cart);
 
-        // Flash message untuk memberi tahu pengguna
-        session()->flash('success', 'Barang berhasil dimasukkan ke keranjang.');
-
-        // Redirect ke halaman keranjang
-        return redirect()->route('keranjang.index');
+        return redirect()->route('keranjang.index')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
 
-    public function index()
+    // Perbarui jumlah produk di keranjang
+    public function update(Request $request, $produkId)
     {
-        // Ambil keranjang dari session
-        $keranjangs = session()->get('keranjang', []);
-        $total = 0;
+        $request->validate([
+            'jumlah' => 'required|integer|min:1',
+        ]);
 
-        // Hitung total harga
-        foreach ($keranjangs as $keranjang) {
-            $total += $keranjang['produk']->harga * $keranjang['jumlah'];
+        $cart = session('cart', []);
+
+        if (isset($cart[$produkId])) {
+            $cart[$produkId]['jumlah'] = $request->jumlah;
+            $cart[$produkId]['subtotal'] = $request->jumlah * $cart[$produkId]['harga'];
+
+            session()->put('cart', $cart);
+
+            return redirect()->route('keranjang.index')->with('success', 'Jumlah item diperbarui.');
         }
 
-        return view('keranjang.index', compact('keranjangs', 'total'));
+        return redirect()->route('keranjang.index')->with('error', 'Item tidak ditemukan di keranjang.');
+    }
+
+    // Hapus produk dari keranjang
+    public function hapus($produkId)
+    {
+        $cart = session('cart', []);
+
+        if (isset($cart[$produkId])) {
+            unset($cart[$produkId]);
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->route('keranjang.index')->with('success', 'Item berhasil dihapus dari keranjang.');
     }
 }

@@ -1,30 +1,18 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+// app/Models/Pesanan.php
 class Pesanan extends Model
 {
-    use HasFactory;
+    // app/Models/Pesanan.php
 
-    protected $fillable = [
-        'user_id', 
-        'total_harga', 
-        'status', 
-        'alamat_pengiriman'
-    ];
-
-    // Relasi ke user (pembeli)
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    // Relasi ke detail item dalam pesanan
-    public function detailPesanan()
-    {
-        return $this->hasMany(DetailPesanan::class);
-    }
+    protected $fillable = ['user_id', 'nama', 'alamat', 'telepon', 'total_harga'];
+public function detailPesanan()
+{
+    return $this->hasMany(DetailPesanan::class);
 }
+}
+

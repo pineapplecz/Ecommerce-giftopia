@@ -176,114 +176,124 @@
     <div id="produkCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <!-- Slide 1 -->
-        <div class="carousel-item active">
-          <div class="row g-4">
-            <div class="col-md-4">
-              <div class="card promo-card">
+      <!-- Slide 1 -->
+<!-- Slide 1 -->
+<div class="carousel-item active">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card promo-card">
                 <img src="kado 1.png" class="card-img-top" alt="Produk 1">
                 <div class="card-body">
-                  <h5 class="card-title">Cake</h5>
-                  <p class="card-text">Macam-macam kue dengan rasa yang menggugah.</p>
-                  <a href="/gift-box-aesthetic" class="btn btn-main">Lihat Detail</a>
+                    <h5 class="card-title">Cake</h5>
+                    <p class="card-text">Macam-macam kue dengan rasa yang menggugah.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Cake' -->
+                    <a href="{{ route('kategori.show', ['id' => 1]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
-              </div>
             </div>
-            <div class="col-md-4">
-              <div class="card promo-card">
+        </div>
+        <div class="col-md-4">
+            <div class="card promo-card">
                 <img src="kado 2.png" class="card-img-top" alt="Produk 2">
                 <div class="card-body">
-                  <h5 class="card-title">Parcel Buah</h5>
-                  <p class="card-text">Pilihan kado untuk pasangan, siap kirim hari ini.</p>
-                  <a href="/kado-couple" class="btn btn-main">Lihat Detail</a>
+                    <h5 class="card-title">Parcel Buah</h5>
+                    <p class="card-text">Pilihan kado untuk pasangan, siap kirim hari ini.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Parcel Buah' -->
+                    <a href="{{ route('kategori.show', ['id' => 2]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
-              </div>
             </div>
-            <div class="col-md-4">
-              <div class="card promo-card">
+        </div>
+        <div class="col-md-4">
+            <div class="card promo-card">
                 <img src="kado 3.png" class="card-img-top" alt="Produk 3">
                 <div class="card-body">
-                  <h5 class="card-title">Parcel Pecah Belah</h5>
-                  <p class="card-text">Isi surprise box bisa kamu sesuaikan sendiri.</p>
-                  <a href="/surprise-box" class="btn btn-main">Lihat Detail</a>
+                    <h5 class="card-title">Parcel Pecah Belah</h5>
+                    <p class="card-text">Isi surprise box bisa kamu sesuaikan sendiri.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Parcel Pecah Belah' -->
+                    <a href="{{ route('kategori.show', ['id' => 3]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
+    </div>
+</div>
 
-        <!-- Slide 2 -->
-        <div class="carousel-item">
-          <div class="row g-4">
-            <div class="col-md-4">
-              <div class="card promo-card">
+<!-- Slide 2 -->
+<div class="carousel-item">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card promo-card">
                 <img src="kado 4.png" class="card-img-top" alt="Produk 4">
                 <div class="card-body">
-                  <h5 class="card-title">Parcel Makanan</h5>
-                  <p class="card-text">Paket kado mewah dengan berbagai pilihan.</p>
-                  <a href="/gift-box-lux" class="btn btn-main">Lihat Detail</a>
+                    <h5 class="card-title">Parcel Makanan</h5>
+                    <p class="card-text">Paket kado mewah dengan berbagai pilihan.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Parcel Makanan' -->
+                    <a href="{{ route('kategori.show', ['id' => 4]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
-              </div>
             </div>
-            <div class="col-md-4">
-              <div class="card promo-card">
-                <img src="kado5.jpg" class="card-img-top" alt="Produk 5">
-                <div class="card-body">
-                  <h5 class="card-title">Kado Khusus</h5>
-                  <p class="card-text">Kado yang dibuat khusus sesuai keinginan.</p>
-                  <a href="/kado-khusus" class="btn btn-main">Lihat Detail</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card promo-card">
-                <img src="kado6.jpg" class="card-img-top" alt="Produk 6">
-                <div class="card-body">
-                  <h5 class="card-title">Set Hadiah Ibu</h5>
-                  <p class="card-text">Kado istimewa untuk ibu tercinta.</p>
-                  <a href="/set-hadiah-ibu" class="btn btn-main">Lihat Detail</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-
-        <!-- Slide 3 -->
-        <div class="carousel-item">
-          <div class="row g-4">
-            <div class="col-md-4">
-              <div class="card promo-card">
-                <img src="kado7.jpg" class="card-img-top" alt="Produk 7">
+        <div class="col-md-4">
+            <div class="card promo-card">
+                <img src="kado 5.png" class="card-img-top" alt="Produk 5">
                 <div class="card-body">
-                  <h5 class="card-title">Kado Hari Jadi</h5>
-                  <p class="card-text">Hadiah untuk merayakan hari jadi istimewa.</p>
-                  <a href="/kado-hari-jadi" class="btn btn-main">Lihat Detail</a>
+                    <h5 class="card-title">Parcel Kesehatan</h5>
+                    <p class="card-text">Kado untuk kunjungi orang sakit.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Parcel Kesehatan' -->
+                    <a href="{{ route('kategori.show', ['id' => 5]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
-              </div>
             </div>
-            <div class="col-md-4">
-              <div class="card promo-card">
-                <img src="kado8.jpg" class="card-img-top" alt="Produk 8">
-                <div class="card-body">
-                  <h5 class="card-title">Kado Wisuda</h5>
-                  <p class="card-text">Kado terbaik untuk wisuda.</p>
-                  <a href="/kado-wisuda" class="btn btn-main">Lihat Detail</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card promo-card">
-                <img src="kado9.jpg" class="card-img-top" alt="Produk 9">
-                <div class="card-body">
-                  <h5 class="card-title">Kado Pesta</h5>
-                  <p class="card-text">Kado untuk acara pesta dan perayaan.</p>
-                  <a href="/kado-pesta" class="btn btn-main">Lihat Detail</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+        <div class="col-md-4">
+            <div class="card promo-card">
+                <img src="kado 6.png" class="card-img-top" alt="Produk 6">
+                <div class="card-body">
+                    <h5 class="card-title">Hampers</h5>
+                    <p class="card-text">Kado istimewa untuk hadiah acara.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Hampers' -->
+                    <a href="{{ route('kategori.show', ['id' => 6]) }}" class="btn btn-main">Lihat Detail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-      </div>
+<!-- Slide 3 -->
+<div class="carousel-item">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card promo-card">
+                <img src="kado 7.png" class="card-img-top" alt="Produk 7">
+                <div class="card-body">
+                    <h5 class="card-title">Personal gift</h5>
+                    <p class="card-text">Hadiah untuk merayakan hari jadi istimewa.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Personal gift' -->
+                    <a href="{{ route('kategori.show', ['id' => 7]) }}" class="btn btn-main">Lihat Detail</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card promo-card">
+                <img src="kado 8.png" class="card-img-top" alt="Produk 8">
+                <div class="card-body">
+                    <h5 class="card-title">Baby Born gift</h5>
+                    <p class="card-text">Kado terbaik untuk bayi.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Baby Born gift' -->
+                    <a href="{{ route('kategori.show', ['id' => 8]) }}" class="btn btn-main">Lihat Detail</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card promo-card">
+                <img src="kado 9.png" class="card-img-top" alt="Produk 9">
+                <div class="card-body">
+                    <h5 class="card-title">Bunga</h5>
+                    <p class="card-text">Kado untuk acara pesta dan perayaan.</p>
+                    <!-- Tombol mengarah ke halaman kategori 'Bunga' -->
+                    <a href="{{ route('kategori.show', ['id' => 9]) }}" class="btn btn-main">Lihat Detail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
       <!-- Tombol Navigasi Slider -->
       <button class="carousel-control-prev" type="button" data-bs-target="#produkCarousel" data-bs-slide="prev" style="background-color: #D84040; color: #fff; width: 40px; height: 40px; border-radius: 50%; border: none; position: absolute; top: 50%; left: 5px; transform: translateY(-50%); display: flex; align-items: center; justify-content: center;">

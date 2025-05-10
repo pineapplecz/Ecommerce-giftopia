@@ -9,6 +9,8 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\Admin\PesananController2;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\CheckoutController;
 
 // ========== Halaman Utama ========== 
 Route::get('/home', fn() => view('home'))->name('home');
@@ -34,9 +36,10 @@ Route::post('/login', function (Request $request) {
     // Login user dari database
     $user = DB::table('users')->where('email', $email)->first();
     if ($user && Hash::check($password, $user->password)) {
+        // Menyimpan data pengguna ke session setelah login berhasil
         session([
             'role' => 'user',
-            'user_id' => $user->id,
+            'user_id' => $user->id,  // Pastikan user_id ada di session
             'name' => $user->name
         ]);
         return redirect('/dashboard');
@@ -64,43 +67,51 @@ Route::post('/logout', function () {
 })->name('logout');
 
 // ========== Dashboard ========== 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// ========== Keranjang ========== 
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
-Route::get('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
-// Admin dashboard, hanya untuk admin
-Route::get('/admin/dashboard', function () {
-    if (session('role') !== 'admin') {
-        return redirect('/login');
-    }
-    return view('admin.dashboard');
+Route::post('/keranjang/tambah/{produk}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
+Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
+Route::put('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
+
+// ========== Admin Routes ========== 
+Route::middleware('auth.custom')->prefix('admin')->group(function () {
+
+    // Admin Dashboard, hanya untuk admin
+    Route::get('/dashboard', function () {
+        if (session('role') !== 'admin') {
+            return redirect('/login');
+        }
+        return view('admin.dashboard');
+    });
+
+    // Admin Pesanan
+    Route::get('/pesanan', function () {
+        if (session('role') !== 'admin') {
+            return redirect('/login');
+        }
+        return view('admin.pesanan.index');
+    })->name('admin.pesanan.index');
+
+    Route::post('/pesanan/{id}/ubah-status', function ($id) {
+        if (session('role') !== 'admin') {
+            return redirect('/login');
+        }
+        // Logika untuk mengubah status pesanan
+        return redirect()->route('admin.pesanan.index');
+    })->name('admin.pesanan.ubahStatus');
 });
 
-// ========== Fitur User ========== 
-Route::group(['middleware' => 'auth.custom'], function () {
-    // Hanya fitur yang perlu login yang dikelompokkan di sini
-    Route::get('/checkout', [PesananController::class, 'checkout'])->name('checkout');
-    Route::post('/checkout', [PesananController::class, 'checkout'])->name('checkout.store');
-    Route::get('/struk/{id}', [PesananController::class, 'struk'])->name('struk');
-});
-
-// ========== Admin Pesanan ========== 
-Route::get('/admin/pesanan', function () {
-    if (session('role') !== 'admin') {
-        return redirect('/login');
-    }
-    return view('admin.pesanan.index');
-})->name('admin.pesanan.index');
-
-Route::post('/admin/pesanan/{id}/ubah-status', function ($id) {
-    if (session('role') !== 'admin') {
-        return redirect('/login');
-    }
-    // Logika untuk mengubah status pesanan
-    return redirect()->route('admin.pesanan.index');
-})->name('admin.pesanan.ubahStatus');
-
-// Kategori route
+// ========== Kategori dan Produk ========== 
 Route::get('/kategori/{id}', [KategoriController::class, 'show'])->name('kategori.show');
+Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.detail');
+
+// ========== Checkout ========== 
+Route::get('/checkout', [CheckoutController::class, 'tampilForm'])->name('checkout.form');
+Route::post('/checkout', [CheckoutController::class, 'prosesCheckout'])->name('checkout.proses');
+Route::get('/checkout/struk', [CheckoutController::class, 'tampilStruk'])->name('checkout.struk');
+
 
 // Middleware kustom untuk pengecekan session
 Route::middleware('auth.custom')->group(function () {
