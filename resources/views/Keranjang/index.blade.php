@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <!-- Tombol kembali -->
-    <div class="d-flex justify-content-start mt-3">
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">← Kembali</a>
+      <div class="mt-4">
+      <a href="javascript:history.back()" class="btn-back">Kembali</a>
     </div>
 
     <h1 class="my-4">Keranjang Belanja</h1>

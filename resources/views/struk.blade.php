@@ -1,40 +1,45 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Struk Pesanan</title>
+    <style>
+        body { font-family: sans-serif; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #000; padding: 5px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h2>Struk Pesanan #{{ $pesanan->id }}</h2>
+    <p><strong>Status:</strong> {{ ucfirst($pesanan->status) }}</p>
+    <p><strong>Total:</strong> Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+    <p><strong>Tanggal:</strong> {{ $pesanan->created_at->format('d M Y, H:i') }}</p>
 
-@section('content')
-<div class="container">
-    <h3>Struk Pesanan</h3>
-
-    <div class="card mb-3">
-        <div class="card-body">
-            <p><strong>No. Pesanan:</strong> #{{ $pesanan->id }}</p>
-            <p><strong>Status:</strong> {{ ucfirst($pesanan->status) }}</p>
-            <p><strong>Total:</strong> Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
-            <p><strong>Tanggal:</strong> {{ $pesanan->created_at->format('d M Y, H:i') }}</p>
-        </div>
-    </div>
-
-    <h5>Detail Produk:</h5>
-    <table class="table table-bordered">
+    <h4>Detail Produk</h4>
+    <table>
         <thead>
             <tr>
-                <th>Nama Produk</th>
+                <th>Produk</th>
                 <th>Jumlah</th>
-                <th>Harga Satuan</th>
+                <th>Harga</th>
                 <th>Subtotal</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($pesanan->detailPesanan as $detail)
+            @foreach ($pesanan->detailPesanan as $item)
             <tr>
-                <td>{{ $detail->produk->nama }}</td>
-                <td>{{ $detail->jumlah }}</td>
-                <td>Rp {{ number_format($detail->harga, 0, ',', '.') }}</td>
-                <td>Rp {{ number_format($detail->jumlah * $detail->harga, 0, ',', '.') }}</td>
+                <td>{{ $item->produk->nama }}</td>
+                <td>{{ $item->jumlah }}</td>
+                <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                <td>Rp {{ number_format($item->harga * $item->jumlah, 0, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>
     </table>
-
-    <a href="{{ url('/') }}" class="btn btn-primary">Kembali ke Beranda</a>
+    <div class="mt-4">
+    <a href="{{ url('/dashboard') }}" class="btn btn-secondary">Kembali ke Beranda</a>
+    <a href="{{ route('checkout.struk', $pesanan->id) }}" class="btn btn-success">Cetak Struk</a>
 </div>
-@endsection
+
+</body>
+</html>

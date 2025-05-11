@@ -1,49 +1,84 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Pesanan;
 use App\Models\PesananItem;
-use App\Models\Keranjang;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PesananController extends Controller
 {
-   public function prosesCheckout(Request $request)
-{
-    $request->validate([
-        'nama' => 'required',
-        'alamat' => 'required',
-        'telepon' => 'required',
-    ]);
+    // Proses checkout
+    public function prosesCheckout(Request $request)
+    {
+        // Validasi inputan
+        $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required',
+        ]);
 
-    // Ambil data keranjang
-    $keranjang = Session::get('cart', []);
+        // Ambil keranjang belanja dari session
+        $keranjang = Session::get('cart', []);
 
-    // Ambil ID pengguna yang login
-    $userId = session('user_id'); // ID pengguna yang login
+        // Cek apakah keranjang kosong
+        if (empty($keranjang)) {
+            return redirect()->route('keranjang.index')->with('error', 'Keranjang tidak boleh kosong!');
+        }
 
-    // Buat pesanan baru, simpan user_id dan informasi pengiriman
-    $pesanan = Pesanan::create([
-        'user_id' => $userId,  // ID pengguna yang login
-        'nama' => $request->nama,  // Nama penerima (pengguna bisa memasukkan data lain selain mereka)
-        'alamat' => $request->alamat,  // Alamat pengiriman
-        'telepon' => $request->telepon,  // Nomor telepon penerima
-        'total_harga' => array_sum(array_column($keranjang, 'subtotal')),  // Total harga
-    ]);
+        // Ambil ID user yang login
+        $userId = session('user_id');
+        if (!$userId) {
+            return redirect()->route('login')->with('error', 'Harap login terlebih dahulu');
+        }
 
-    // Menyimpan data checkout di session
-    $dataCheckout = [
-        'nama' => $request->nama,
-        'alamat' => $request->alamat,
-        'telepon' => $request->telepon,
-        'item' => $keranjang,
-        'total' => array_sum(array_column($keranjang, 'subtotal')),
-        'id' => $pesanan->id,   // Simpan ID pesanan yang baru dibuat
-    ];
+        // Buat pesanan baru
+        $pesanan = Pesanan::create([
+            'user_id' => $userId,
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'telepon' => $request->telepon,
+            'total_harga' => array_sum(array_column($keranjang, 'subtotal')),
+        ]);
 
-    Session::put('data_checkout', $dataCheckout);
+        // Simpan detail item pesanan
+        foreach ($keranjang as $item) {
+            PesananItem::create([
+                'pesanan_id' => $pesanan->id,
+                'produk_id' => $item['id'],
+                'jumlah' => $item['jumlah'],
+                'harga' => $item['harga'],
+            ]);
+        }
 
-    return redirect()->route('checkout.struk');
-}
+        // Simpan data checkout ke session untuk digunakan di struk
+        $dataCheckout = [
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'telepon' => $request->telepon,
+            'item' => $keranjang,
+            'total' => array_sum(array_column($keranjang, 'subtotal')),
+            'id' => $pesanan->id,
+        ];
+
+        Session::put('data_checkout', $dataCheckout);
+
+        // Redirect ke halaman untuk menampilkan struk
+        return redirect()->route('checkout.struk');
+    }
+
+    // Fungsi untuk cetak struk pesanan
+    public function cetakStruk($id)
+    {
+        // Ambil pesanan beserta detail itemnya
+        $pesanan = Pesanan::with('detailPesanan.produk')->findOrFail($id);
+
+        // Generate PDF dengan view 'checkout.struk_pdf'
+        $pdf = Pdf::loadView('checkout.struk_pdf', compact('pesanan'));
+
+        // Download file PDF
+        return $pdf->download('struk-pesanan-'.$pesanan->id.'.pdf');
+    }
 }

@@ -10,10 +10,11 @@ return new class extends Migration
     {
     Schema::create('pesanans', function (Blueprint $table) {
     $table->id();
-    // Kolom lainnya, tanpa user_id
-    $table->string('nama');
-    $table->string('alamat');
-    $table->string('telepon');
+    $table->unsignedBigInteger('user_id'); // Menambahkan kolom user_id
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Membuat relasi dengan tabel users
+   $table->string('nama_penerima');
+$table->text('alamat_penerima');
+$table->string('no_hp_penerima');
     $table->decimal('total_harga', 10, 2);
     $table->timestamps();
 });
@@ -22,6 +23,9 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('pesanans');
-    }
+       Schema::table('pesanans', function (Blueprint $table) {
+        $table->dropForeign(['user_id']);
+        $table->dropColumn('user_id');
+    }); 
+}
 };

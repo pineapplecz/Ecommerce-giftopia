@@ -116,8 +116,8 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/login">
       <img src="{{ asset('logo.png') }}" alt="Logo Giftopia">
@@ -144,12 +144,15 @@
         </li>
       </ul>
       <div class="d-flex">
-        <a href="/login" class="btn btn-main me-2">Login</a>
-        <a href="/login" class="btn btn-outline-light">Daftar</a>
+        <!-- Tombol Login -->
+        <a href="/login" class="btn btn-outline-light me-2">Login</a>
+        <!-- Tombol Daftar -->
+        <a href="/register" class="btn btn-main">Daftar</a>
       </div>
     </div>
   </div>
 </nav>
+
 
 
   <!-- Hero Section -->
@@ -182,34 +185,34 @@
     <div class="row g-4">
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 1.png" class="card-img-top" alt="Produk 1">
+               <img src="{{ asset('kado 1.png') }}" class="card-img-top" alt="Produk 1">
                 <div class="card-body">
                     <h5 class="card-title">Cake</h5>
                     <p class="card-text">Macam-macam kue dengan rasa yang menggugah.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Cake' -->
-                    <a href="{{ route('kategori.show', ['id' => 1]) }}" class="btn btn-main">Lihat Detail</a>
+                    <a href="{{ route('kategori.show', ['kategori' => 1]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 2.png" class="card-img-top" alt="Produk 2">
+            <img src="{{ asset('kado 2.png') }}" class="card-img-top" alt="Produk 2">
                 <div class="card-body">
                     <h5 class="card-title">Parcel Buah</h5>
                     <p class="card-text">Pilihan kado untuk pasangan, siap kirim hari ini.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Parcel Buah' -->
-                    <a href="{{ route('kategori.show', ['id' => 2]) }}" class="btn btn-main">Lihat Detail</a>
+                    <a href="{{ route('kategori.show', ['kategori' => 2]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 3.png" class="card-img-top" alt="Produk 3">
+               <img src="{{ asset('kado 3.png') }}" class="card-img-top" alt="Produk 3">
                 <div class="card-body">
                     <h5 class="card-title">Parcel Pecah Belah</h5>
                     <p class="card-text">Isi surprise box bisa kamu sesuaikan sendiri.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Parcel Pecah Belah' -->
-                    <a href="{{ route('kategori.show', ['id' => 3]) }}" class="btn btn-main">Lihat Detail</a>
+                    <a href="{{ route('kategori.show', ['kategori' => 3]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
             </div>
         </div>
@@ -221,34 +224,34 @@
     <div class="row g-4">
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 4.png" class="card-img-top" alt="Produk 4">
+               <img src="{{ asset('kado 4.png') }}" class="card-img-top" alt="Produk 4">
                 <div class="card-body">
                     <h5 class="card-title">Parcel Makanan</h5>
                     <p class="card-text">Paket kado mewah dengan berbagai pilihan.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Parcel Makanan' -->
-                    <a href="{{ route('kategori.show', ['id' => 4]) }}" class="btn btn-main">Lihat Detail</a>
+                    <a href="{{ route('kategori.show', ['kategori' => 4]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 5.png" class="card-img-top" alt="Produk 5">
+                <img src="{{ asset('kado 5.png') }}" class="card-img-top" alt="Produk 5">
                 <div class="card-body">
                     <h5 class="card-title">Parcel Kesehatan</h5>
                     <p class="card-text">Kado untuk kunjungi orang sakit.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Parcel Kesehatan' -->
-                    <a href="{{ route('kategori.show', ['id' => 5]) }}" class="btn btn-main">Lihat Detail</a>
+                    <a href="{{ route('kategori.show', ['kategori' => 5]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 6.png" class="card-img-top" alt="Produk 6">
+                <img src="{{ asset('kado 6.png') }}" class="card-img-top" alt="Produk 6">
                 <div class="card-body">
                     <h5 class="card-title">Hampers</h5>
                     <p class="card-text">Kado istimewa untuk hadiah acara.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Hampers' -->
-                    <a href="{{ route('kategori.show', ['id' => 6]) }}" class="btn btn-main">Lihat Detail</a>
+                    <a href="{{ route('kategori.show', ['kategori' => 6]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
             </div>
         </div>
@@ -260,34 +263,36 @@
     <div class="row g-4">
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 7.png" class="card-img-top" alt="Produk 7">
+               <img src="{{ asset('kado 7.png') }}" class="card-img-top" alt="Produk 7">
                 <div class="card-body">
                     <h5 class="card-title">Personal gift</h5>
                     <p class="card-text">Hadiah untuk merayakan hari jadi istimewa.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Personal gift' -->
-                    <a href="{{ route('kategori.show', ['id' => 7]) }}" class="btn btn-main">Lihat Detail</a>
+                    <a href="{{ route('kategori.show', ['kategori' => 7]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 8.png" class="card-img-top" alt="Produk 8">
+               <img src="{{ asset('kado 8.png') }}" class="card-img-top" alt="Produk 8">
                 <div class="card-body">
                     <h5 class="card-title">Baby Born gift</h5>
                     <p class="card-text">Kado terbaik untuk bayi.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Baby Born gift' -->
-                    <a href="{{ route('kategori.show', ['id' => 8]) }}" class="btn btn-main">Lihat Detail</a>
+                    <a href="{{ route('kategori.show', ['kategori' => 8]) }}" class="btn btn-main">Lihat Detail</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card promo-card">
-                <img src="kado 9.png" class="card-img-top" alt="Produk 9">
+               <img src="{{ asset('kado 9.png') }}" class="card-img-top" alt="Produk 9">
                 <div class="card-body">
                     <h5 class="card-title">Bunga</h5>
                     <p class="card-text">Kado untuk acara pesta dan perayaan.</p>
                     <!-- Tombol mengarah ke halaman kategori 'Bunga' -->
-                    <a href="{{ route('kategori.show', ['id' => 9]) }}" class="btn btn-main">Lihat Detail</a>
+                 <a href="{{ route('kategori.show', ['kategori' => 9]) }}" class="btn btn-main">Lihat Detail</a>
+
+
                 </div>
             </div>
         </div>

@@ -1,26 +1,28 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\produks;
+use App\Models\Produk; // Gunakan model Produk
 use App\Models\Kategori;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 class KategoriController extends Controller
 {
+    // Menampilkan daftar kategori
     public function index()
     {
         $kategoris = Kategori::all();
         return view('admin.kategori.index', compact('kategoris'));
     }
 
+    // Menampilkan form untuk membuat kategori baru
     public function create()
     {
         return view('admin.kategori.create');
     }
 
+    // Menyimpan kategori baru
     public function store(Request $request)
     {
         $validasi = $request->validate([
@@ -29,8 +31,10 @@ class KategoriController extends Controller
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
+        // Membuat slug dari nama kategori
         $validasi['slug'] = Str::slug($request->nama);
 
+        // Menyimpan gambar jika ada
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
             $namaGambar = time() . '.' . $gambar->getClientOriginalExtension();
@@ -43,11 +47,13 @@ class KategoriController extends Controller
         return redirect()->route('admin.kategori.index')->with('sukses', 'Kategori berhasil ditambahkan');
     }
 
+    // Menampilkan form untuk mengedit kategori
     public function edit(Kategori $kategori)
     {
         return view('admin.kategori.edit', compact('kategori'));
     }
 
+    // Memperbarui kategori
     public function update(Request $request, Kategori $kategori)
     {
         $validasi = $request->validate([
@@ -59,7 +65,7 @@ class KategoriController extends Controller
         $validasi['slug'] = Str::slug($request->nama);
 
         if ($request->hasFile('gambar')) {
-            // Hapus gambar lama jika ada
+            // Menghapus gambar lama jika ada
             if ($kategori->gambar) {
                 $jalurGambarLama = public_path('images/kategori/' . $kategori->gambar);
                 if (file_exists($jalurGambarLama)) {
@@ -78,9 +84,10 @@ class KategoriController extends Controller
         return redirect()->route('admin.kategori.index')->with('sukses', 'Kategori berhasil diperbarui');
     }
 
+    // Menghapus kategori
     public function destroy(Kategori $kategori)
     {
-        // Hapus gambar jika ada
+        // Menghapus gambar jika ada
         if ($kategori->gambar) {
             $jalurGambar = public_path('images/kategori/' . $kategori->gambar);
             if (file_exists($jalurGambar)) {
@@ -93,10 +100,10 @@ class KategoriController extends Controller
         return redirect()->route('admin.kategori.index')->with('sukses', 'Kategori berhasil dihapus');
     }
 
-    // Frontend kategori
+    // Menampilkan produk berdasarkan kategori
     public function show($id)
     {
-        // Ambil data kategori berdasarkan ID
+        // Mengambil kategori berdasarkan ID
         $kategori = DB::table('kategoris')->where('id', $id)->first();
 
         // Jika kategori tidak ditemukan
@@ -104,10 +111,10 @@ class KategoriController extends Controller
             return redirect('/home')->withErrors(['msg' => 'Kategori tidak ditemukan']);
         }
 
-        // Ambil produks yang terkait dengan kategori ini (misalnya produks berada di tabel produks)
+        // Mengambil produk yang terkait dengan kategori ini
         $produks = DB::table('produks')->where('kategori_id', $id)->get();
 
-        // Kembalikan ke view dengan data kategori dan produks
+        // Kembalikan tampilan dengan data kategori dan produk
         return view('kategori.show', ['kategori' => $kategori, 'produks' => $produks]);
     }
 }

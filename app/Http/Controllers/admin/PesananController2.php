@@ -1,33 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
-use App\Models\Pesanan;
+use App\Models\Pesanan;  // Pastikan kamu mengimpor model Pesanan
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PesananController2 extends Controller
 {
-    // Menampilkan daftar pesanan untuk admin
     public function index()
     {
-        // Mengambil semua pesanan dengan relasi user
-        $pesanans = Pesanan::with('user')->latest()->get();
+        // Cek login dan role admin manual
+        if (session('role') !== 'admin') {
+            return redirect('/login');
+        }
 
-        // Mengembalikan view dengan data pesanan
-        return view('admin.pesanan.index', compact('pesanans'));
-    }
+        // Ambil data pesanan + user
+        $pesanan = DB::table('pesanans')
+            ->join('users', 'pesanans.user_id', '=', 'users.id')
+            ->select('pesanans.*', 'users.name as user_name')
+            ->orderBy('pesanans.created_at', 'desc')
+            ->get();
 
-    // Mengubah status pesanan
-    public function ubahStatus(Request $request, $id)
-    {
-        // Mencari pesanan berdasarkan ID
-        $pesanan = Pesanan::findOrFail($id);
-
-        // Memperbarui status pesanan
-        $pesanan->update(['status' => $request->status]);
-
-        // Kembali ke halaman sebelumnya dengan pesan sukses
-        return back()->with('success', 'Status pesanan diperbarui');
+        return view('admin.pesanan.index', compact('pesanan'));
     }
 }
