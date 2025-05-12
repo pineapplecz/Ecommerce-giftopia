@@ -42,12 +42,13 @@ class ProdukController extends Controller
         return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    public function edit($id)
-    {
-        $produk = Produk::findOrFail($id);
-        $kategoris = Kategori::all();
-        return view('admin.produk.edit', compact('produk', 'kategoris'));
-    }
+public function edit($id)
+{
+    $produk = Produk::findOrFail($id);
+    $kategoris = Kategori::all();
+    return view('admin.produk.edit', compact('produk', 'kategoris'));
+}
+
 
     public function update(Request $request, $id)
     {

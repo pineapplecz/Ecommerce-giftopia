@@ -85,20 +85,24 @@ class KategoriController extends Controller
     }
 
     // Menghapus kategori
-    public function destroy(Kategori $kategori)
-    {
-        // Menghapus gambar jika ada
-        if ($kategori->gambar) {
-            $jalurGambar = public_path('images/kategori/' . $kategori->gambar);
-            if (file_exists($jalurGambar)) {
-                unlink($jalurGambar);
-            }
+public function destroy(Kategori $kategori)
+{
+    // Hapus semua produk terkait kategori ini
+    $kategori->produks()->delete();
+
+    // Hapus gambar jika ada
+    if ($kategori->gambar) {
+        $jalurGambar = public_path('images/kategori/' . $kategori->gambar);
+        if (file_exists($jalurGambar)) {
+            unlink($jalurGambar);
         }
-
-        $kategori->delete();
-
-        return redirect()->route('admin.kategori.index')->with('sukses', 'Kategori berhasil dihapus');
     }
+
+    // Hapus kategori
+    $kategori->delete();
+
+    return redirect()->route('admin.kategori.index')->with('sukses', 'Kategori dan produk terkait berhasil dihapus');
+}
 
     // Menampilkan produk berdasarkan kategori
     public function show($id)

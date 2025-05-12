@@ -97,14 +97,24 @@ Route::post('/checkout', [CheckoutController::class, 'prosesCheckout'])->name('c
 Route::get('/checkout/struk', [CheckoutController::class, 'tampilStruk'])->name('checkout.struk');
 
 // Admin Pesanan Routes
-Route::prefix('admin')->group(function () {
-    Route::get('/pesanan', [PesananController2::class, 'index'])->name('admin.pesanan.index');
-    Route::get('/pesanan/create', [PesananController2::class, 'create'])->name('admin.pesanan.create');
-    Route::post('/pesanan', [PesananController2::class, 'store'])->name('admin.pesanan.store');
-    Route::get('/pesanan/{id}/edit', [PesananController2::class, 'edit'])->name('admin.pesanan.edit');
-    Route::put('/pesanan/{id}', [PesananController2::class, 'update'])->name('admin.pesanan.update');
-    Route::delete('/pesanan/{id}', [PesananController2::class, 'destroy'])->name('admin.pesanan.destroy');
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Pesanan routes
+    Route::get('/pesanan', [PesananController2::class, 'index'])->name('pesanan.index');
+    Route::get('/pesanan/create', [PesananController2::class, 'create'])->name('pesanan.create');
+    Route::post('/pesanan', [PesananController2::class, 'store'])->name('pesanan.store');
+    Route::get('/pesanan/{id}/edit', [PesananController2::class, 'edit'])->name('pesanan.edit');
+    Route::put('/pesanan/{id}', [PesananController2::class, 'update'])->name('pesanan.update');
+    Route::delete('/pesanan/{id}', [PesananController2::class, 'destroy'])->name('pesanan.destroy');
+
+    // Kategori routes
+    Route::resource('kategori', KategoriController::class);
+    Route::delete('/admin/kategori/{id}', [KategoriController::class, 'destroy'])->name('admin.kategori.destroy');
+
+
+    // produk routes
+    Route::resource('produk', ProdukController::class);
 });
+
 
 // Logout Route
 Route::get('/logout', function () {
